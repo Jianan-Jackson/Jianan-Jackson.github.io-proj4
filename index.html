@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Jianan Cai</title>
+    <style>
+        body {font-family: 'Calibri';}
+
+        div.desc {
+        padding: 15px;
+        text-align: center;
+        font-family:verdana;
+        }
+
+        .container {
+        padding: 6px;
+        justify-content: center;
+        }
+
+        .responsive {
+        padding: 0 6px;
+        float: left;
+        width: 20%; 
+        display:flex;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <h1>CS180-Project4</h1>
+    </div>
+
+
+    <h2>Shoot the Pictures</h2>
+    <p>
+        These are the picture I shoted  for this project. They are overlapping 50%- 70% with different views.
+    </p>
+    <div class="container">
+        
+        <div class="responsive">
+            <div>
+                <img src="inputs/sprouts_m.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+        
+        <div class="responsive">
+            <div >
+                <img src="inputs/sprouts_r.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container" style="clear: both;">
+        
+        <div class="responsive">
+            <div>
+                <img src="inputs/house_l.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+        
+        <div class="responsive">
+            <div >
+                <img src="inputs/house_r.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container" style="clear: both;">
+        
+        <div class="responsive">
+            <div>
+                <img src="inputs/room_l.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+        
+        <div class="responsive">
+            <div >
+                <img src="inputs/room_m.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="container">
+        <h2 style="clear: both;">Recover Homographies</h2>
+
+        <p>To compute the H, I just follow the steps below</p>
+
+        
+        <div class="responsive">
+            <div>
+                <img src="outputs/equation.png" alt="cameraman" style="width: 100%; height: auto; ">
+
+            </div>
+        </div>
+        
+
+    </div>
+
+    <div class="container">
+        <h2 style="clear: both;">Warp the Images</h2>
+
+        <p>I applied inverse warping to compute the transformation using the homography, similar to the approach I used in the previous project. 
+            However, instead of merging two images, the task here involved interpolating pixel values from a single image and mapping them onto a blank canvas.
+        </p>
+        
+
+    </div>
+
+    <div class="container">
+        <h2 style="clear: both;"> Image Rectification</h2>
+
+        <p>
+            Here are the examples of the rectified images. The first image is the original image, and the second image is the rectified image.
+        </p>
+        
+        <div class="responsive">
+            <div>
+                <img src="inputs/book.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+        <div class="responsive">
+            <div>
+                <img src="outputs/warped_book.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container" style="clear: both;">
+        
+        <div class="responsive">
+            <div>
+                <img src="inputs/ipad.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+        
+        <div class="responsive">
+            <div >
+                <img src="outputs/warped_ipad.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <div class="container">
+        <h2 style="clear: both;">Blend the images into a mosaic</h2>
+        
+        <p> Fro this part, my approach to creating the mosaic was to first warp each image 
+            (except for the reference one) onto the reference image using the homography transformation. This results in a set of warped images, all 
+            aligned on the same plane but with the actual image content in different positions.
+            To stitch all the iamges together, I used a distance transform-based blending technique. The idea is to compute how far each pixel is from the edge of its respective image (in the overlapping region), 
+            and use this information to weight the contributions of both images in the blending process.
+        </p>
+        
+        <div class="responsive">
+            <div>
+                <img src="inputs/sprouts_m.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+        <div class="responsive">
+            <div>
+                <img src="inputs/sprouts_r.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+        <div class="responsive">
+            <div>
+                <img src="outputs/sprouts_mosaic.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="container" style="clear: both;">
+        
+        <div class="responsive">
+            <div>
+                <img src="inputs/house_l.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+        
+        <div class="responsive">
+            <div >
+                <img src="inputs/house_r.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+        <div class="responsive">
+            <div >
+                <img src="outputs/house_mosaic.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container" style="clear: both;">
+        
+        <div class="responsive">
+            <div>
+                <img src="inputs/room_l.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+        
+        <div class="responsive">
+            <div >
+                <img src="inputs/room_m.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+        <div class="responsive">
+            <div >
+                <img src="outputs/room_mosaic.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+    </div>
+
+
+
+</body>
