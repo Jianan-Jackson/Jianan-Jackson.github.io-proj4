@@ -230,6 +230,190 @@
 
     </div>
 
+    <h1 style="clear: both;">Part II</h1>
+
+    <h2>Detecting corner features</h2>
+    <P>
+        To detect the the features in the iamges, we need to detect all the interest points in the images.
+        The Harris Corner Detector is a method for detecting interest points (specifically, corners) in an image. 
+        Corners are areas in an image where intensity changes in multiple directions, making them distinctive and stable for tasks like feature matching and image stitching.
+        Here, I didn't implement my own Harris Corner Detector. Instead, I used the code in the Harris.py file.
+    </P>
+
+
+    <div class="container" style="clear: both;">
+        <h2>Adaptive Non-Maximal Suppression</h2>
+        <p>
+            Since we do not need every interest points in the iamges, we should keep the most important ones.  we will use a technique called non-maximum suppression to filter out the less important points.
+            Adaptive Non-Maximal Suppression (ANMS) is a technique used to select a well-distributed set of strong interest points from a large set of detected corners or feature points. 
+            The goal of ANMS is to ensure that only the most distinctive and spatially diverse points are retained, which is especially useful for applications like feature matching in image stitching.
+            images below are some examples of the ANMS results. Also, I selected 200 interesting points and robust is 0.9.
+        </p>
+
+        <div class="responsive">
+            <div>
+                <img src="outputs/sprouts_m_with_selected_points.png" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+        
+        <div class="responsive">
+            <div >
+                <img src="outputs/sprouts_r_with_selected_points.png" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="container" style="clear: both;">
+        <h2>Extracting a Feature Descriptor</h2>
+        <p>
+            In order to get the information of the interesting points, we need to extract the feature descriptor. 
+            The reason why we need to extract the feature descriptor is that we need to match the interesting points in the two images.
+            Here is the steps to extract the feature descriptor.
+        </p>
+
+        <ul>
+            <li>Extract a 40x40 Window around Each Feature Point</li>
+            <li>Downsample the 40x40 Window to an 8x8 Patch</li>
+            <li>Normalize the Descriptor (Bias/Gain Normalization)</li>
+            <li>Store Descriptors for Each Feature Point</li>
+        </ul>
+
+
+    </div>
+
+    <div class="container" style="clear: both;">
+        <h2>Matching Feature Descriptors</h2>
+        <p>
+            After extracting the feature descriptor, we need to match the interesting points in the two images. 
+            The matching process is to find the most similar feature points in the two images. 
+            To identify pairs of features that are likely to be strong matches. To do this, we use the threshold ratio (1-NN / 2-NN) as proposed by Lowe, which serves as a metric to assess 
+            the strength of each match. Here, 1-NN represents the nearest neighbor, while 2-NN denotes the second nearest neighbor. 
+            I chose a threshold ratio of 0.5 for comparison, meaning a match is accepted if the distance to the nearest neighbor is less than this.
+            
+        </p>
+
+    </div>
+
+    <div class="container" style="clear: both;">
+        <h2>RANSAC</h2>
+        <p>
+            The last step is to use RANSAC to find the best homography.
+            RANSAC (Random Sample Consensus) is an iterative method used to estimate the parameters of a mathematical model from a set of observed data that contains outliers.
+            Here are the steps to use RANSAC to find the best homography.
+        </p>
+
+        <ul>
+            <li>Randomly Select 4 Matched interesting Points</li>
+            <li>Compute the Homography Matrix H</li>
+            <li> Compute inlier pairs where Dist(p', Hp) < epsilon</li>
+            <li>Keep the largest inlier set</li>
+            <li>Repeat Steps 1-4 for N Iterations</li>
+        </ul>
+
+        <p>
+            Note taht I choose the number of iterations to be 3000 and the threshold to be 8.
+        </p>
+
+    </div>
+
+
+    <div class="container" style="clear: both;">
+        <h2>Results</h2>
+        
+        <div class="responsive">
+            <div>
+                <img src="outputs/sprouts_m_with_selected_points.png" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+        
+        <div class="responsive">
+            <div >
+                <img src="outputs/sprouts_r_with_selected_points.png" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+        <div class="responsive">
+            <div >
+                <img src="outputs/sprouts_mosaic_auto.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+        <div class="responsive">
+            <div >
+                <img src="outputs/sprouts_mosaic.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="container" style="clear: both;">
+        
+        <div class="responsive">
+            <div>
+                <img src="outputs/house_l_with_selected_points.png" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+        
+        <div class="responsive">
+            <div >
+                <img src="outputs/house_r_with_selected_points.png" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+        <div class="responsive">
+            <div >
+                <img src="outputs/house_mosaic_auto.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+        <div class="responsive">
+            <div >
+                <img src="outputs/house_mosaic.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="container" style="clear: both;">
+        
+        <div class="responsive">
+            <div>
+                <img src="outputs/room_m_with_selected_points.png" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+        
+        <div class="responsive">
+            <div >
+                <img src="outputs/room_r_with_selected_points.png" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+        <div class="responsive">
+            <div >
+                <img src="outputs/room_mosaic_auto.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+        <div class="responsive">
+            <div >
+                <img src="outputs/room_mosaic.jpg" alt="cameraman" style="width: 100%; height: auto; ">
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="container" style="clear: both;">
+        
+        <h2>What have you learned?</h2>
+        <p>
+            I learned that How the Harris Corner Detector works and how to implement it and how to use it to detect the interesting points in the images.
+            Also, the RANSAC algorithm is a powerful tool for finding the best homography between two images.
+        </p>
 
 
 </body>
